@@ -1,5 +1,13 @@
 package dp
 
+/*
+最长上升子序列
+给你一个整数数组 nums ，找到其中最长严格递增子序列的长度。
+
+解：
+dp[i]表示以nums[i]结尾的最长上升子序列
+*/
+
 func lengthOfLIS(nums []int) int {
 	dp := make([]int, len(nums))
 	result := 1
