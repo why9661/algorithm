@@ -5,12 +5,11 @@ package search
 */
 
 func binarySearch(arr []int, target int) int {
-	var low = 0
-	var high = len(arr) - 1
-	var mid int
+	low := 0
+	high := len(arr) - 1
 
 	for low <= high {
-		mid = (low + high) / 2
+		mid := low + (high-low)/2
 		if arr[mid] > target {
 			high = mid - 1
 		}
