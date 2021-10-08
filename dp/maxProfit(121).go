@@ -16,8 +16,8 @@ func maxProfit(prices []int) int {
 	minPrice := prices[0]
 
 	for i := 1; i < len(prices); i++ {
-		minPrice = min(prices[i], minPrice)
 		result = max(result, prices[i]-minPrice)
+		minPrice = min(prices[i], minPrice)
 	}
 
 	return result

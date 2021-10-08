@@ -12,11 +12,12 @@ func maxProfit2(prices []int) int {
 		return 0
 	}
 
-	maxProfit := 0
+	result := 0
 
 	for i := 1; i < len(prices); i++ {
-		maxProfit = max(maxProfit, maxProfit+prices[i]-prices[i-1])
+		if prices[i] > prices[i-1] {
+			result += prices[i] - prices[i-1]
+		}
 	}
-
-	return maxProfit
+	return result
 }
