@@ -20,20 +20,15 @@ package sort
 O(nlogn)
 */
 
-func Quicksort(arr []int) []int {
-	result := make([]int, len(arr))
-	copy(result, arr)
-
-	low := 0
-	high := len(arr) - 1
-	quick(result, low, high)
-
-	return result
+func QuickSort(arr []int) {
+	left := 0
+	right := len(arr) - 1
+	quick(arr, left, right)
 }
 
-func quick(arr []int, low, high int) {
-	if low < high {
-		i, j := low, high
+func quick(arr []int, left, right int) {
+	if left < right {
+		i, j := left, right
 		pivot := arr[i]
 		for i < j {
 			for i < j && arr[j] >= pivot {
@@ -50,10 +45,8 @@ func quick(arr []int, low, high int) {
 				arr[j] = arr[i]
 			}
 		}
-
 		arr[i] = pivot
-
-		quick(arr, low, i-1)
-		quick(arr, i+1, high)
+		quick(arr, left, i-1)
+		quick(arr, i+1, right)
 	}
 }
