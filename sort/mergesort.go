@@ -15,15 +15,16 @@ package sort
 O(n)
 */
 
-func Mergesort(arr []int) []int {
+func MergeSort(arr []int) []int {
 	length := len(arr)
 	if length < 2 {
 		return arr
 	}
 
 	mid := length / 2
-	left := Mergesort(arr[:mid])
-	right := Mergesort(arr[mid:])
+
+	left := MergeSort(arr[:mid])
+	right := MergeSort(arr[mid:])
 
 	return merge(left, right)
 }
@@ -32,7 +33,7 @@ func merge(arr1 []int, arr2 []int) []int {
 	var result []int
 
 	for len(arr1) != 0 && len(arr2) != 0 {
-		if arr1[0] <= arr2[0] {
+		if arr1[0] < arr2[0] {
 			result = append(result, arr1[0])
 			arr1 = arr1[1:]
 		} else {
