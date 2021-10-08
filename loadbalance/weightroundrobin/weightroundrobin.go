@@ -1,6 +1,6 @@
 package weightroundrobin
 
-type wRoundRobin struct {
+type WRoundRobin struct {
 	peers []*node
 }
 
@@ -11,11 +11,11 @@ type node struct {
 	effectiveWeight int
 }
 
-func New() *wRoundRobin {
-	return new(wRoundRobin)
+func New() *WRoundRobin {
+	return new(WRoundRobin)
 }
 
-func (w *wRoundRobin) Add(key string, weight int) {
+func (w *WRoundRobin) Add(key string, weight int) {
 	n := &node{
 		key:             key,
 		weight:          weight,
@@ -26,7 +26,7 @@ func (w *wRoundRobin) Add(key string, weight int) {
 	w.peers = append(w.peers, n)
 }
 
-func (w *wRoundRobin) Get() string {
+func (w *WRoundRobin) Get() string {
 	totalWeight := 0
 
 	var maxWeight *node

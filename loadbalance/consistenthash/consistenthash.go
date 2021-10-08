@@ -8,15 +8,15 @@ import (
 
 type hashFunc func([]byte) uint32
 
-type cHash struct {
+type CHash struct {
 	keys    []int
 	replica int
 	mapping map[int]string
 	hash    hashFunc
 }
 
-func New(hash hashFunc, replica int) *cHash {
-	instance := cHash{
+func New(hash hashFunc, replica int) *CHash {
+	instance := CHash{
 		replica: replica,
 		mapping: make(map[int]string),
 		hash:    hash,
@@ -29,7 +29,7 @@ func New(hash hashFunc, replica int) *cHash {
 	return &instance
 }
 
-func (ch *cHash) Add(peers ...string) {
+func (ch *CHash) Add(peers ...string) {
 	for _, peer := range peers {
 		for i := 0; i < ch.replica; i++ {
 			hashData := []byte(strconv.Itoa(i) + peer)
@@ -41,7 +41,7 @@ func (ch *cHash) Add(peers ...string) {
 	sort.Ints(ch.keys)
 }
 
-func (ch *cHash) Get(key string) string {
+func (ch *CHash) Get(key string) string {
 	if ch.keys == nil {
 		return ""
 	}
