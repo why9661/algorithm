@@ -11,6 +11,12 @@ type Tree struct {
 	root *node
 }
 
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
 func New() *Tree {
 	return new(Tree)
 }
@@ -33,6 +39,24 @@ func (n *node) preOrder() {
 	n.right.preOrder()
 }
 
+func preorderTraversal(root *TreeNode) []int {
+	var preOrder func(n *TreeNode)
+	var res []int
+
+	preOrder = func(n *TreeNode) {
+		if n == nil {
+			return
+		}
+		res = append(res, n.Val)
+		preOrder(n.Left)
+		preOrder(n.Right)
+	}
+
+	preOrder(root)
+
+	return res
+}
+
 //中序遍历
 func (t *Tree) MidOrder() {
 	if t.root == nil {
@@ -51,6 +75,24 @@ func (n *node) midOrder() {
 	n.right.midOrder()
 }
 
+func midorderTraversal(root *TreeNode) []int {
+	var midOrder func(n *TreeNode)
+	var res []int
+
+	midOrder = func(n *TreeNode) {
+		if n == nil {
+			return
+		}
+		midOrder(n.Left)
+		res = append(res, n.Val)
+		midOrder(n.Right)
+	}
+
+	midOrder(root)
+
+	return res
+}
+
 //后序遍历
 func (t *Tree) PostOrder() {
 	if t.root == nil {
@@ -67,6 +109,24 @@ func (n *node) postOrder() {
 	n.left.postOrder()
 	n.right.postOrder()
 	fmt.Println(n.val)
+}
+
+func postorderTraversal(root *TreeNode) []int {
+	var postOrder func(n *TreeNode)
+	var res []int
+
+	postOrder = func(n *TreeNode) {
+		if n == nil {
+			return
+		}
+		postOrder(n.Left)
+		postOrder(n.Right)
+		res = append(res, n.Val)
+	}
+
+	postOrder(root)
+
+	return res
 }
 
 //层序遍历(BFS广度优先遍历)
@@ -94,7 +154,7 @@ func (n *node) levelOrder() {
 	}
 }
 
-//DFS深度优先遍历（前序遍历的非递归）
+// 前序遍历的非递归
 func (t *Tree) PreOrderNR() {
 	if t.root == nil {
 		return
@@ -117,4 +177,94 @@ func (n *node) preOrderNR() {
 			stack = append(stack, n.left)
 		}
 	}
+}
+
+func preorderTraversalNR(root *TreeNode) []int {
+	if root == nil {
+		return nil
+	}
+
+	var res []int
+	stack := make([]*TreeNode, 0)
+
+	stack = append(stack, root)
+
+	for len(stack) > 0 {
+		root = stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		res = append(res, root.Val)
+		if root.Right != nil {
+			stack = append(stack, root.Right)
+		}
+		if root.Left != nil {
+			stack = append(stack, root.Left)
+		}
+	}
+
+	return res
+}
+
+// 中序遍历的非递归
+func (t *Tree) MidOrderNR() {
+
+}
+
+func (n *node) midOrderNR() {
+
+}
+
+func midorderTraversalNR(root *TreeNode) []int {
+	if root == nil {
+		return nil
+	}
+	var res []int
+	stack := make([]*TreeNode, 0)
+	for root != nil || len(stack) > 0 {
+		for root != nil {
+			stack = append(stack, root)
+			root = root.Left
+		}
+		root = stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		res = append(res, root.Val)
+		root = root.Right
+	}
+
+	return res
+}
+
+// 后序遍历的非递归（在前序遍历的基础上，调换左右的入栈顺序，再将整个结果数据翻转）
+func (t *Tree) PostOrderNR() {
+
+}
+
+func (n *node) postOrderNR() {
+
+}
+
+func postorderTraversalNR(root *TreeNode) []int {
+	if root == nil {
+		return nil
+	}
+
+	var res []int
+	stack := make([]*TreeNode, 0)
+	stack = append(stack, root)
+	for len(stack) > 0 {
+		root = stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		res = append(res, root.Val)
+		if root.Left != nil {
+			stack = append(stack, root.Left)
+		}
+		if root.Right != nil {
+			stack = append(stack, root.Right)
+		}
+	}
+
+	for i := 0; i < len(res)/2; i++ {
+		res[i], res[len(res)-1-i] = res[len(res)-1-i], res[i]
+	}
+
+	return res
 }
