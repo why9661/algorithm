@@ -1,4 +1,4 @@
-package weightroundrobin
+package smooth
 
 type WRoundRobin struct {
 	peers []*node
