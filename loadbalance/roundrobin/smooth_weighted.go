@@ -1,6 +1,6 @@
-package smooth
+package roundrobin
 
-type WRoundRobin struct {
+type SmoothWeightedRoundRobin struct {
 	peers []*node
 }
 
@@ -11,11 +11,11 @@ type node struct {
 	effectiveWeight int
 }
 
-func New() *WRoundRobin {
-	return new(WRoundRobin)
+func NewSmoothWeightedRoundRobin() *SmoothWeightedRoundRobin {
+	return new(SmoothWeightedRoundRobin)
 }
 
-func (w *WRoundRobin) Add(key string, weight int) {
+func (w *SmoothWeightedRoundRobin) Add(key string, weight int) {
 	n := &node{
 		key:             key,
 		weight:          weight,
@@ -26,7 +26,7 @@ func (w *WRoundRobin) Add(key string, weight int) {
 	w.peers = append(w.peers, n)
 }
 
-func (w *WRoundRobin) Get() string {
+func (w *SmoothWeightedRoundRobin) Get() string {
 	totalWeight := 0
 
 	var maxWeight *node

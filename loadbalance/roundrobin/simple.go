@@ -5,7 +5,7 @@ type RoundRobin struct {
 	peers    []string
 }
 
-func New() *RoundRobin {
+func NewRoundRobin() *RoundRobin {
 	return new(RoundRobin)
 }
 

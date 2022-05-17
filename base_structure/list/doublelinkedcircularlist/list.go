@@ -1,19 +1,19 @@
 package doublelinkedcircularlist
 
-type Element struct {
-	prev, next *Element
+type Node struct {
+	prev, next *Node
 	value      interface{}
 	list       *List
 }
 
-func (e *Element) Next() *Element {
+func (e *Node) Next() *Node {
 	if p := e.next; e.list != nil && p != &e.list.head {
 		return p
 	}
 	return nil
 }
 
-func (e *Element) Prev() *Element {
+func (e *Node) Prev() *Node {
 	if p := e.prev; e.list != nil && p != &e.list.head {
 		return p
 	}
@@ -21,11 +21,11 @@ func (e *Element) Prev() *Element {
 }
 
 type List struct {
-	head Element //头结点
+	head Node //头结点
 	len  int
 }
 
-// 初始化(清空)链表
+// Init 初始化(清空)链表
 func (l *List) Init() *List {
 	l.head.next = &l.head
 	l.head.prev = &l.head
@@ -47,24 +47,24 @@ func (l *List) Len() int {
 	return l.len
 }
 
-// 返回链表的第一个结点
-func (l *List) Front() *Element {
+// Front 返回链表的第一个结点
+func (l *List) Front() *Node {
 	if l.len == 0 {
 		return nil
 	}
 	return l.head.next
 }
 
-// 返回链表的最后一个结点
-func (l *List) Back() *Element {
+// Back 返回链表的最后一个结点
+func (l *List) Back() *Node {
 	if l.len == 0 {
 		return nil
 	}
 	return l.head.prev
 }
 
-// 插入结点，并返回该结点
-func (l *List) Insert(e, at *Element) *Element {
+// Insert 插入结点，并返回该结点
+func (l *List) Insert(e, at *Node) *Node {
 	e.next = at.next
 	e.prev = at
 	e.next.prev = e
@@ -74,13 +74,13 @@ func (l *List) Insert(e, at *Element) *Element {
 	return e
 }
 
-// 插入值，并返回该结点
-func (l *List) InsertValue(value interface{}, at *Element) *Element {
-	return l.Insert(&Element{value: value}, at)
+// InsertValue 插入值，并返回该结点
+func (l *List) InsertValue(value interface{}, at *Node) *Node {
+	return l.Insert(&Node{value: value}, at)
 }
 
-// 删除结点，并返回该结点
-func (l *List) Remove(e *Element) *Element {
+// Remove 删除结点，并返回该结点
+func (l *List) Remove(e *Node) *Node {
 	e.prev.next = e.next
 	e.next.prev = e.prev
 	e.prev = nil
@@ -90,8 +90,8 @@ func (l *List) Remove(e *Element) *Element {
 	return e
 }
 
-// 移动结点，并返回该结点
-func (l *List) Move(e, at *Element) *Element {
+// Move 移动结点，并返回该结点
+func (l *List) Move(e, at *Node) *Node {
 	if e == at {
 		return e
 	}
@@ -105,28 +105,28 @@ func (l *List) Move(e, at *Element) *Element {
 	return e
 }
 
-// 在链表头部插入值，并返回生成的结点
-func (l *List) PushFront(v interface{}) *Element {
+// PushFront 在链表头部插入值，并返回生成的结点
+func (l *List) PushFront(v interface{}) *Node {
 	l.lazyInit()
 	return l.InsertValue(v, &l.head)
 }
 
-// 在链表尾部插入值，并返回生成的结点
-func (l *List) PushBack(v interface{}) *Element {
+// PushBack 在链表尾部插入值，并返回生成的结点
+func (l *List) PushBack(v interface{}) *Node {
 	l.lazyInit()
 	return l.InsertValue(v, l.head.prev)
 }
 
-// 将结点移动到链表头
-func (l *List) MoveToFront(e *Element) {
+// MoveToFront 将结点移动到链表头
+func (l *List) MoveToFront(e *Node) {
 	if e.list != l || l.head.next == e {
 		return
 	}
 	l.Move(e, &l.head)
 }
 
-// 将结点移动到链表尾
-func (l *List) MoveToBack(e *Element) {
+// MoveToBack 将结点移动到链表尾
+func (l *List) MoveToBack(e *Node) {
 	if e.list != l || l.head.prev == e {
 		return
 	}

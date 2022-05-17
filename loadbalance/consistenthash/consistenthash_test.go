@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestConsistenthash(t *testing.T) {
+func TestConsistentHash(t *testing.T) {
 	hFunc := func(data []byte) uint32 {
 		i, _ := strconv.Atoi(string(data))
 		return uint32(i)
