@@ -15,7 +15,7 @@ package sort
 O(1)
 */
 
-func Selectsort(arr []int) {
+func SelectSort(arr []int) {
 	var minIndex int
 	for i := 0; i < len(arr)-1; i++ {
 		minIndex = i

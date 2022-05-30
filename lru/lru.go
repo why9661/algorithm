@@ -7,7 +7,7 @@ type Lru struct {
 	nBytes    int64                         // used memory
 	queue     *list.List                    // double linked list
 	cache     map[string]*list.Element      // k-v map
-	OnEvicted func(key string, value Value) // callback function executed when an entry is purged
+	onEvicted func(key string, value Value) // callback function executed when an entry is purged
 }
 
 type entry struct {
@@ -24,7 +24,7 @@ func New(mBytes int64, onEvicted func(string, Value)) *Lru {
 		mBytes:    mBytes,
 		queue:     list.New(),
 		cache:     make(map[string]*list.Element),
-		OnEvicted: onEvicted,
+		onEvicted: onEvicted,
 	}
 }
 
@@ -63,8 +63,8 @@ func (l *Lru) removeOldest() {
 		delete(l.cache, e.key)
 		l.queue.Remove(ele)
 		l.nBytes -= int64(len(e.key) + e.value.Len())
-		if l.OnEvicted != nil {
-			l.OnEvicted(e.key, e.value)
+		if l.onEvicted != nil {
+			l.onEvicted(e.key, e.value)
 		}
 	}
 }

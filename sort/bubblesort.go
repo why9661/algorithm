@@ -15,7 +15,7 @@ package sort
 O(1)
 */
 
-func Bubblesort(arr []int) {
+func BubbleSort(arr []int) {
 	for i := 0; i < len(arr); i++ {
 		for j := 1; j < len(arr)-i; j++ {
 			if arr[j-1] > arr[j] {

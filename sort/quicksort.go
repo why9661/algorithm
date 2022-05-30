@@ -27,6 +27,7 @@ func QuickSort(arr []int) {
 }
 
 func quick(arr []int, left, right int) {
+	// baseline
 	if left < right {
 		i, j := left, right
 		pivot := arr[i]

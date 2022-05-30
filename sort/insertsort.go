@@ -14,7 +14,7 @@ package sort
 O(1)
 */
 
-func Insertsort(arr []int) {
+func InsertSort(arr []int) {
 	var preIndex int
 	var cur int
 	for i := 1; i < len(arr); i++ {
