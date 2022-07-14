@@ -5,22 +5,22 @@ import (
 	"time"
 )
 
-type RandomBalance struct {
+type RandBalance struct {
 	peers []string
 }
 
-func New() *RandomBalance {
-	return new(RandomBalance)
+func New() *RandBalance {
+	return new(RandBalance)
 }
 
-func (rb *RandomBalance) Add(keys ...string) {
+func (rb *RandBalance) Add(keys ...string) {
 	for _, key := range keys {
 		rb.peers = append(rb.peers, key)
 	}
 }
 
-func (rb *RandomBalance) Get() string {
+func (rb *RandBalance) Get() string {
 	rand.Seed(time.Now().UnixNano())
-	random := rand.Intn(len(rb.peers) - 1)
-	return rb.peers[random]
+	index := rand.Intn(len(rb.peers) - 1)
+	return rb.peers[index]
 }
