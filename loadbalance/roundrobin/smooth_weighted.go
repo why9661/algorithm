@@ -1,12 +1,13 @@
 package roundrobin
 
 type SmoothWeightedRoundRobin struct {
-	peers []*node
+	peers       []*node
+	totalWeight int
 }
 
 type node struct {
 	key             string
-	weight          int
+	weight          int // configure
 	curWeight       int
 	effectiveWeight int
 }
@@ -19,26 +20,25 @@ func (w *SmoothWeightedRoundRobin) Add(key string, weight int) {
 	n := &node{
 		key:             key,
 		weight:          weight,
-		curWeight:       weight,
+		curWeight:       weight, // or 0
 		effectiveWeight: weight,
 	}
+
+	w.totalWeight += weight
 
 	w.peers = append(w.peers, n)
 }
 
 func (w *SmoothWeightedRoundRobin) Get() string {
-	totalWeight := 0
-
 	var maxWeight *node
 
 	for _, peer := range w.peers {
-		totalWeight += peer.effectiveWeight
 		peer.curWeight += peer.effectiveWeight
 		if maxWeight == nil || peer.curWeight >= maxWeight.curWeight {
 			maxWeight = peer
 		}
 	}
 
-	maxWeight.curWeight -= totalWeight
+	maxWeight.curWeight -= w.totalWeight
 	return maxWeight.key
 }
